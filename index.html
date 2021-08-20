@@ -198,7 +198,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-08-20 18:17:42 / 修改时间：18:20:10" itemprop="dateCreated datePublished" datetime="2021-08-20T18:17:42+08:00">2021-08-20</time>
+      <time title="创建时间：2021-08-20 18:17:42 / 修改时间：18:28:02" itemprop="dateCreated datePublished" datetime="2021-08-20T18:17:42+08:00">2021-08-20</time>
     </span>
 
   
@@ -229,7 +229,7 @@
 <p>同样，首先要定义一个广播接收器来接收广播，然后进行注册，接着在活动中加入以下代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(想要使用的action);</span><br><span class="line">sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
 
-<p>​               以上代码的作用是：首先构建出一个Intent对象，并把要发送的广播植传入，然后调用Context的s-endBroadcast( )方法将广播发送出去，这样发送出去的是一条标准广播。</p>
+<p>​               以上代码的作用是：首先构建出一个Intent对象，并把要发送的广播值传入，然后调用Context的s-endBroadcast( )方法将广播发送出去，这样发送出去的是一条标准广播。</p>
 <p><strong>发送有序广播</strong></p>
 <p>​               在上述代码基础上将<code>sendBroadcast(intent)</code>换为<code>sendOrderedBroadcast(intent,与权限相关的字符串)</code>，然后在AndroidManifest.xml中加入如下代码:</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;intent-filter android:priority=<span class="string">&quot;100&quot;</span>&gt;         <span class="comment">//priority用于设置广播接收器的优先性</span></span><br></pre></td></tr></table></figure>
