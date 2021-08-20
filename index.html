@@ -198,7 +198,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-08-20 18:17:42 / 修改时间：18:28:02" itemprop="dateCreated datePublished" datetime="2021-08-20T18:17:42+08:00">2021-08-20</time>
+      <time title="创建时间：2021-08-20 18:17:42 / 修改时间：18:35:57" itemprop="dateCreated datePublished" datetime="2021-08-20T18:17:42+08:00">2021-08-20</time>
     </span>
 
   
@@ -224,7 +224,7 @@
 <p>​               NetworkChangeReceive是一个内部类，用来作为广播接收器，在onCreat( )方法中创建了一个Int-enFilter的实例，并且给它添加了一个值为android.net.conn.CONNECTIVITY_CHANGE的action，这是因为当系统的的网络状况发生改变时，发出的就是一条值为android.net.conn.CONNECTIVITY -CHANGE的广播，想接收什么样的广播，就在这里加入相应的action。接着用registerReceiver方法进行注册。注意，动态注册的广播接收器一定都要取消注册才行。</p>
 <p>（注意：如果程序需要进行一些对用户来说比较敏感的操作，就必须在配置文件中声明权限才可         以，否则程序会崩溃）</p>
 <p><strong>静态注册：</strong></p>
-<p>​               首先需要创建一个新的类，作为广播接收器，同样可以在onReceive方法中写入自己的逻辑，在创建时记得勾选Exported属性和Enabled属性，然后在AndroidManifest.xml文件中加入学要用到的权限和action。</p>
+<p>​               首先需要创建一个新的类，作为广播接收器，同样可以在onReceive方法中写入自己的逻辑，在创建时记得勾选Exported属性和Enabled属性，然后在AndroidManifest.xml文件中加入需要用到的权限和action。</p>
 <h2 id="发送自定义广播"><a href="#发送自定义广播" class="headerlink" title="发送自定义广播"></a>发送自定义广播</h2><p><strong>发送标准广播</strong></p>
 <p>同样，首先要定义一个广播接收器来接收广播，然后进行注册，接着在活动中加入以下代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Intent intent = <span class="keyword">new</span> Intent(想要使用的action);</span><br><span class="line">sendBroadcast(intent);</span><br></pre></td></tr></table></figure>
