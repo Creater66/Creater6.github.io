@@ -133,7 +133,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-count">7</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,6 +164,100 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://creater66.github.io/2021/09/01/UseDatabase/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/author.jpg">
+      <meta itemprop="name" content="YX.">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="YX.的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/09/01/UseDatabase/" class="post-title-link" itemprop="url">未命名</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-09-01 20:01:41 / 修改时间：23:16:12" itemprop="dateCreated datePublished" datetime="2021-09-01T20:01:41+08:00">2021-09-01</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>持久化储存数据的方法有三种，分别是：文件存储、SharedPreference以及数据库存储。</p>
+<h2 id="文件存储"><a href="#文件存储" class="headerlink" title="文件存储"></a>文件存储</h2><h3 id="向文件中写入数据"><a href="#向文件中写入数据" class="headerlink" title="向文件中写入数据"></a>向文件中写入数据</h3><p>文件存储不对存储的内容进行任何的格式化处理，所有的数据都是原封不动地保存到文件中，因而它比较适合用于存储一些简单的文本数据或二进制数据，具体操作如下。</p>
+<p>Context类中提供了一个openFileOutput()方法，可以用于将数据存储到指定的文件中。这个方法接收两个参数，第一个参数是文件名，这个文件不能包含路径，因为所有的文件都是默认存储到/data/data/<package name>/files/目录下。第二个参数是文件的操作模式，主要有两种模式可选，MODE_PRIVATE和MODE_APPEND。其中MODE_PRIVATE是默认的操作模式，表示当指定同样文件名的时候，所写入的内容将会覆盖原文件中的内容，而MODE_APPEND则表示如果该文件已存在，就往文件里追加内容，不存在就创建文件。示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> EditText edit;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        edit = (EditText) findViewById(R.id.edit);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">save</span><span class="params">(String inputText)</span> </span>&#123;</span><br><span class="line">        FileOutputStream out = <span class="keyword">null</span>;</span><br><span class="line">        BufferedWriter writer = <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            out = openFileOutput(<span class="string">&quot;data&quot;</span>, Context.MODE_PRIVATE);</span><br><span class="line">            writer = <span class="keyword">new</span> BufferedWriter(<span class="keyword">new</span> OutputStreamWriter(out));</span><br><span class="line">            writer.write(inputText);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (writer != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    writer.close();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                e.printStackTrace();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先使用<code>openFileOutput</code>方法获得一个FlieOutputStream(字节输出流)对象，接着new一个BufferedWriter(缓冲流)，传入的参数是一个OutputStreamWriter(转换流)对象，接着使用Buffere-dWriter对象下的write方法把想写的内容写入文件。</p>
+<h3 id="从文件中读取数据"><a href="#从文件中读取数据" class="headerlink" title="从文件中读取数据"></a>从文件中读取数据</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">String inputText = load(); </span><br><span class="line"><span class="keyword">if</span> (!TextUtils.isEmpty(inputText)) &#123;</span><br><span class="line">            edit.setText(inputText);</span><br><span class="line">            edit.setSelection(inputText.length());</span><br><span class="line">            Toast.makeText(<span class="keyword">this</span>, <span class="string">&quot;Restoring succeeded&quot;</span>, Toast.LENGTH_SHORT).show();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">load</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        FileInputStream in = <span class="keyword">null</span>;</span><br><span class="line">        BufferedReader reader = <span class="keyword">null</span>;</span><br><span class="line">        StringBuilder content = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            in = openFileInput(<span class="string">&quot;data&quot;</span>);</span><br><span class="line">            reader = <span class="keyword">new</span> BufferedReader(<span class="keyword">new</span> InputStreamReader(in));</span><br><span class="line">            String line = <span class="string">&quot;&quot;</span>;</span><br><span class="line">            <span class="keyword">while</span> ((line = reader.readLine()) != <span class="keyword">null</span>) &#123;</span><br><span class="line">                content.append(line);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (reader != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    reader.close();</span><br><span class="line">                &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">                    e.printStackTrace();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> content.toString();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>首先通过openFileInput()方法获取到了一个FileInputStream对象，然后new了一个BufferdRe-ader对象，然后使用BufferdReader对象下的readLine()方法一行一行地读取数据。</p>
+<h2 id="SharedPreferences存储"><a href="#SharedPreferences存储" class="headerlink" title="SharedPreferences存储"></a>SharedPreferences存储</h2><p>SharedPreferences是使用键值对的方式来存储数据的。当保存一条数据的时候，需要给这条数据提供一个对应的键，这样在读取数据的时候可以通过这个键值把相应的值选出来。而且Shared-Preferences还支持多种不同的数据类型存储，如果存储的数据类型是整型，那么读取出来的数据也是整型，其他数据类型也一样。</p>
+<h3 id="将数据存储到SharedPreferences中"><a href="#将数据存储到SharedPreferences中" class="headerlink" title="将数据存储到SharedPreferences中"></a>将数据存储到SharedPreferences中</h3><p>要想使用SharedPreferences来存储数据，首先需要获取到SharedPreferences对象。Android中主要提供了3中方法用于得到SharedPreferences对象。</p>
+<p>1.Context类中的getSharedPreferences()方法</p>
+<p>此方法接收两个参数，第一个参数用于指定SharedPreferences文件的名称，如果指定的文件不存在则会创建一个，SharedPreferences文件都是存放在/data/data/<package name>/shared-_prefs/目录下。第二个参数用于指定操作模式，目前只有MODE_PRIVATE这一种模式可选，它是默认的操作模式，和直接传入0效果是相同的，表示只有当前应用程序才可以对这个SharedPreferen-ce文件进行读写。</p>
+<p>2.Activity类中的SharedPreferences()方法</p>
+<p>这个方法接收操作模式一个参数，因为使用这个方法时会自动将当前活动的类名作为SharedPr-eferences的文件名。</p>
+<p>3.PreferenceManager类中的getDefaultSharedPreferences()方法</p>
+<p>这是一个静态方法，它接受一个Context参数，并且自动使用当前应用程序的包名作为前缀来命名SharedPreferences文件。然后向SharedPreferences文件中存储数据了，主要可以分为3部实现。</p>
+<p>（1）调用SharedPreferences对象的edit()方法来获取一个SharedPreferences.Editor对象。</p>
+<p>（2）向SharedPreferences.Editor对象中添加数据。</p>
+<p>（3）调用apply()方法将添加的数据提交，从而完成数据存储。</p>
+<p>代码示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MainActivity</span> <span class="keyword">extends</span> <span class="title">AppCompatActivity</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line">        setContentView(R.layout.activity_main);</span><br><span class="line">        Button saveData = (Button) findViewById(R.id.save_data);</span><br><span class="line">        saveData.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                SharedPreferences.Editor editor = getSharedPreferences(<span class="string">&quot;data&quot;</span>, MODE_PRIVATE).edit();</span><br><span class="line">                editor.putString(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;Tom&quot;</span>);</span><br><span class="line">                editor.putInt(<span class="string">&quot;age&quot;</span>, <span class="number">28</span>);</span><br><span class="line">                editor.putBoolean(<span class="string">&quot;married&quot;</span>, <span class="keyword">false</span>);</span><br><span class="line">                editor.apply();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="从SharedPreferences中读取数据"><a href="#从SharedPreferences中读取数据" class="headerlink" title="从SharedPreferences中读取数据"></a>从SharedPreferences中读取数据</h3><p>首先使用getSharedPreferences方法获取到一个SharedPreherences对象，然后根据不同的数据类型，使用SharedPreferences对象下不同的&lt;数据类型&gt;get方法，这些方法接收两个参数，第一个是键，第二个是默认值，即表示当传入的键找不到对应的值时会以什么样的默认值进行返回。代码示例如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">Button restoreData = (Button) findViewById(R.id.restore_data);</span><br><span class="line">        restoreData.setOnClickListener(<span class="keyword">new</span> View.OnClickListener() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                SharedPreferences pref = getSharedPreferences(<span class="string">&quot;data&quot;</span>, MODE_PRIVATE);</span><br><span class="line">                String name = pref.getString(<span class="string">&quot;name&quot;</span>, <span class="string">&quot;&quot;</span>);</span><br><span class="line">                <span class="keyword">int</span> age = pref.getInt(<span class="string">&quot;age&quot;</span>, <span class="number">0</span>);</span><br><span class="line">                <span class="keyword">boolean</span> married = pref.getBoolean(<span class="string">&quot;married&quot;</span>, <span class="keyword">false</span>);</span><br><span class="line">                Log.d(<span class="string">&quot;MainActivity&quot;</span>, <span class="string">&quot;name is &quot;</span> + name);</span><br><span class="line">                Log.d(<span class="string">&quot;MainActivity&quot;</span>, <span class="string">&quot;age is &quot;</span> + age);</span><br><span class="line">                Log.d(<span class="string">&quot;MainActivity&quot;</span>, <span class="string">&quot;married is &quot;</span> + married);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <div>
+         
+</div>
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
